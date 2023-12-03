@@ -1,7 +1,12 @@
-import Dashboard from "./pages/dashboard";
+import { AppContextProvider } from "./context/AppContext";
+import AppRoutes from "./approutes";
 
 function App() {
-  return <Dashboard />;
+  return (
+    <AppContextProvider>
+      <AppRoutes />
+    </AppContextProvider>
+  );
 }
 
 export default App;
