@@ -10,31 +10,31 @@ export default function Bot() {
 
   if (botId !== "49040rfke39r") {
     return (
-      <div className="text-center text-red-500 flex flex-col h-screen items-center justify-center">
+      <div style={{ textAlign: "center", color: "red", display: "flex", flexDirection: "column", height: "100vh", alignItems: "center", justifyContent: "center" }}>
         <IoWarning size={50} />
-        <p className="mt-5">Invalid bot id</p>
-        <button onClick={() => navigate("/")} className="fixed left-10 top-10 bg-[rgba(0,0,0,0.09)] p-3 rounded">
-        <IoArrowBack size={20} />
-      </button>
+        <p style={{ marginTop: "5px" }}>Invalid bot id</p>
+        <button onClick={() => navigate("/")} style={{ position: "fixed", left: "10px", top: "10px", background: "rgba(0,0,0,0.09)", padding: "10px", borderRadius: "5px" }}>
+          <IoArrowBack size={20} />
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="flex w-full items-end max-w-[1400px] mx-auto flex flex-col">
-      <button onClick={() => navigate("/")} className="fixed left-10 top-10 bg-[rgba(0,0,0,0.09)] p-3 rounded">
+    <div style={{ display: "flex", width: "100%", alignItems: "flex-end", maxWidth: "1400px", margin: "0 auto", flexDirection: "column" }}>
+      <button onClick={() => navigate("/")} style={{ position: "fixed", left: "10px", top: "10px", background: "rgba(0,0,0,0.09)", padding: "10px", borderRadius: "5px" }}>
         <IoArrowBack size={20} />
       </button>
 
       {showChat && (
-        <div className="fixed top-10 w-[350px]">
+        <div style={{ position: "fixed", top: "10px", width: "350px" }}>
           <Chatbox />
         </div>
       )}
 
       <button
         onClick={() => setShowChat((prev) => !prev)}
-        className="fixed bottom-10 mt-5 bg-green-500 p-3 rounded-full flex flex-col items-center justify-center"
+        style={{ position: "fixed", bottom: "10px", marginTop: "5px", background: "green", padding: "10px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center" }}
       >
         <IoChatbubbleEllipsesOutline color="white" size={22} />
       </button>
