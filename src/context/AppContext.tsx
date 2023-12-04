@@ -9,6 +9,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     titleTextColor: "#ffffff",
     titleBgColor: "#000000",
     title: "Robochat",
+    btnBgColor: "black",
+    initialMessage: "Hello Beautiful Human, how can I help you today?",
   };
   const [chatbotConfig, setChatbotConfig] = useState(defaultConfig);
 

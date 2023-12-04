@@ -10,7 +10,7 @@ export default function Dashboard() {
     const iframeUrl = `
     <iframe
     title="Example Iframe"
-    src="${window.location.origin}/bot/${chatbotId}"
+    src="${window.location.origin}/bot/1"
     frameBorder="0"
     style="position: fixed; width: 400px; height: 100%; bottom: 0; right: 0;"
     />
@@ -30,10 +30,7 @@ export default function Dashboard() {
           <button onClick={copyEmbedCode} className="copy-button w-56 ml-5 p-1 bg-green-500 text-white">
             Copy embed code
           </button>
-          <button
-            onClick={() => navigate(`/bot/${chatbotId}`)}
-            className="copy-button w-56 ml-5 p-1 bg-green-500 text-white"
-          >
+          <button onClick={() => navigate(`/bot/1`)} className="copy-button w-56 ml-5 p-1 bg-green-500 text-white">
             See
           </button>
         </div>

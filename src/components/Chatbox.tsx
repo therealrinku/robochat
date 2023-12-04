@@ -1,10 +1,10 @@
 import useAppContext from "../hooks/useAppContext";
 
 export default function Chatbox() {
-  const { chatbotConfig, setChatbotConfig }: any = useAppContext();
+  const { chatbotConfig }: any = useAppContext();
 
   return (
-    <section className="chatbot mt-5 text-white border rounded-t-md">
+    <section className="shadow-md mt-5 text-white border rounded-t-md">
       <div
         style={{ backgroundColor: chatbotConfig.titleBgColor, color: chatbotConfig.titleTextColor }}
         className="px-2 py-3 chatbot-title-bg rounded-t-md flex items-center gap-1"
@@ -16,16 +16,12 @@ export default function Chatbox() {
       <div className="bg-white px-2 h-[400px]">
         <p>Robochat</p>
         <div className="float-right text-black bg-blue-500 text-sm w-[75%] rounded-md py-2 text-white px-3">
-          <p>How can I help you, beautiful human being?</p>
+          <p>{chatbotConfig.initialMessage}</p>
         </div>
 
-        <div className="float-left mt-3 text-black border text-sm w-[75%] rounded-md py-2 text-black px-3">
+        {/* <div className="float-left mt-3 text-black border text-sm w-[75%] rounded-md py-2 text-black px-3">
           <p>Hi, I need some help</p>
-        </div>
-      </div>
-
-      <div className="text-black bg-white border-t">
-        <input placeholder="What's up?" className="outline-none p-1 py-3 w-full bg-white" type="text" />
+        </div> */}
       </div>
     </section>
   );
