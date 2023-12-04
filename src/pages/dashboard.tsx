@@ -9,8 +9,9 @@ export default function Dashboard() {
   function copyEmbedCode() {
     const iframeUrl = `<iframe
     title="Example Iframe"
-    src="https://robochatbot.vercel.app/bot/${chatbotId}"
+    src="${window.location.origin}/bot/${chatbotId}"
     frameBorder="0"
+    class="robochatbot-iframe"
   />`;
     window.navigator.clipboard.writeText(iframeUrl);
     alert("Copied");
@@ -36,7 +37,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="w-full md:w-[50%] pl-5">
+      <div className="w-full pl-5 w-full max-w-[350px]">
         <Chatbox />
       </div>
     </div>
