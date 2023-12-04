@@ -7,12 +7,14 @@ export default function Dashboard() {
   const chatbotId = "49040rfke39r";
 
   function copyEmbedCode() {
-    const iframeUrl = `<iframe
+    const iframeUrl = `
+    <iframe
     title="Example Iframe"
     src="${window.location.origin}/bot/${chatbotId}"
     frameBorder="0"
-    class="robochatbot-iframe"
-  />`;
+    style="position: fixed; width: 400px; height: 100%; bottom: 0; right: 0;"
+    />
+`;
     window.navigator.clipboard.writeText(iframeUrl);
     alert("Copied");
   }

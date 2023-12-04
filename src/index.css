@@ -9,11 +9,3 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-
-.robochatbot-iframe {
-  position: fixed;
-  width: 400px;
-  height: 100%;
-  bottom: 0;
-  right: 0;
-}
