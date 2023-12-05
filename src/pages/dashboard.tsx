@@ -27,12 +27,14 @@ export default function Dashboard() {
           <p className="text-xs px-5">chatbotID: {chatbotId}</p>
           <TitlebarStyling />
 
-          <button onClick={copyEmbedCode} className="copy-button w-56 ml-5 p-1 bg-green-500 text-white">
-            Copy embed code
-          </button>
-          <button onClick={() => navigate(`/bot/1`)} className="copy-button w-56 ml-5 p-1 bg-green-500 text-white">
-            See
-          </button>
+          <div className="flex ml-5 text-sm">
+            <button onClick={copyEmbedCode} className="copy-button w-32 p-1 bg-green-500 text-white">
+              Copy embed code
+            </button>
+            <button onClick={() => navigate(`/bot/1`)} className="copy-button w-32 ml-5 p-1 bg-green-500 text-white">
+              See
+            </button>
+          </div>
         </div>
       </div>
 

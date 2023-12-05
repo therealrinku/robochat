@@ -5,6 +5,7 @@ export interface ChatbotModel {
   title: string;
   btnBgColor: string;
   initialMessage: string;
+  messages:{}
 }
 
 export interface AppContextModel {
