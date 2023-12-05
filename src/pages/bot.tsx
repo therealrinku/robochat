@@ -3,13 +3,14 @@ import Chatbox from "../components/Chatbox";
 import { IoChatbubbleEllipsesOutline, IoArrowBack, IoWarning } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
+import { ChatbotModel } from "../models";
 
 export default function Bot() {
   const [showChat, setShowChat] = useState(false);
   const navigate = useNavigate();
   const { botId } = useParams();
 
-  const { chatbotConfig, setChatbotConfig }: any = useAppContext();
+  const { chatbotConfig, setChatbotConfig } = useAppContext();
 
   const botConfigs = {
     "1": {
@@ -34,7 +35,7 @@ export default function Bot() {
   useEffect(() => {
     //@ts-ignore
     const config = botConfigs[botId];
-    setChatbotConfig((prev: any) => (config ? config : prev));
+    setChatbotConfig((prev: ChatbotModel) => (config ? config : prev));
   }, [botId]);
 
   //@ts-ignore

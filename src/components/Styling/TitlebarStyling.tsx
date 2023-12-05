@@ -3,7 +3,7 @@ import { LuChevronsUpDown } from "react-icons/lu";
 import useAppContext from "../../hooks/useAppContext";
 
 export default function TitlebarStyling() {
-  const { chatbotConfig, setChatbotConfig }: any = useAppContext();
+  const { chatbotConfig, setChatbotConfig } = useAppContext();
 
   const [isExpanded, setIsExpanded] = useState(false);
 

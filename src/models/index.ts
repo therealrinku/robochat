@@ -1,4 +1,13 @@
+export interface ChatbotModel {
+  icon: string;
+  titleTextColor: string;
+  titleBgColor: string;
+  title: string;
+  btnBgColor: string;
+  initialMessage: string;
+}
+
 export interface AppContextModel {
-  chatbotConfig: {};
-  setChatbotConfig: Function
+  chatbotConfig: ChatbotModel;
+  setChatbotConfig: Function;
 }

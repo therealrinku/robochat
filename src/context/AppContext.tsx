@@ -1,7 +1,8 @@
 import { PropsWithChildren, createContext, useState } from "react";
 import { AppContextModel } from "../models";
 
-export const AppContext = createContext<AppContextModel>({ chatbotConfig: {}, setChatbotConfig: () => {} });
+//@ts-ignore
+export const AppContext = createContext<AppContextModel>({});
 
 export function AppContextProvider({ children }: PropsWithChildren) {
   const defaultConfig = {

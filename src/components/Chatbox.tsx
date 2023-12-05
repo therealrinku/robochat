@@ -1,7 +1,7 @@
 import useAppContext from "../hooks/useAppContext";
 
 export default function Chatbox() {
-  const { chatbotConfig }: any = useAppContext();
+  const { chatbotConfig } = useAppContext();
 
   return (
     <section className="shadow-md mt-5 text-white border rounded-t-md">
