@@ -13,7 +13,7 @@ export default function Dashboard() {
     title="Example Iframe"
     src="${window.location.origin}/bot/1"
     frameBorder="0"
-    style="position: fixed; width: 400px; height: 100%; bottom: 0; right: 0;"
+    style="position: fixed; width: 400px; height: 100%; bottom: 0; right: 0; z-index: 111"
     />
 `;
     window.navigator.clipboard.writeText(iframeUrl);

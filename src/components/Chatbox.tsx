@@ -36,7 +36,7 @@ export default function Chatbox() {
         <p>{chatbotConfig.title}</p>
       </div>
 
-      <div className="px-2 h-[400px] p-3 overflow-y-auto" ref={messageViewRef}>
+      <div className="bg-white px-2 h-[400px] p-3 overflow-y-auto" ref={messageViewRef}>
         {conversations.map((conversation, i) => {
           return (
             <div
