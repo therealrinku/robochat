@@ -1,4 +1,5 @@
 import Chatbox from "../components/Chatbox";
+import MessageBoxStyling from "../components/Styling/MessageBoxStyling";
 import TitlebarStyling from "../components/Styling/TitlebarStyling";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +27,7 @@ export default function Dashboard() {
           <p className="px-5 pt-2 text-lg">Customize your chatbot</p>
           <p className="text-xs px-5">chatbotID: {chatbotId}</p>
           <TitlebarStyling />
+          <MessageBoxStyling/>
 
           <div className="flex ml-5 text-sm">
             <button onClick={copyEmbedCode} className="copy-button w-32 p-1 bg-green-500 text-white">

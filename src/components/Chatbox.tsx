@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAppContext from "../hooks/useAppContext";
 
 export default function Chatbox() {
@@ -9,18 +9,22 @@ export default function Chatbox() {
   const [replyOptions, setReplyOptions] = useState(chatbotConfig?.messages[1] ?? {});
   const [conversations, setConversations] = useState([]);
 
-  function nextMessage(e:any, message: any) {
+  function nextMessage(e: any, message: any) {
     e.preventDefault();
 
     //@ts-ignore
     setReplyOptions(chatbotConfig.messages[message.nextMessageIndex]);
     //@ts-ignore
-    setConversations((prev) => [...prev, replyOptions.message]);
-    //@ts-ignore
-    setConversations((prev) => [...prev, message.message]);
-    //@ts-ignore
-    messageViewRef.current?.scrollIntoView({behaviour: 'smooth'})
+    setConversations((prev) => [...prev, replyOptions.message, message.message]);
   }
+
+  useEffect(() => {
+    if (messageViewRef.current) {
+      const container = messageViewRef.current;
+      //@ts-ignore
+      container.scrollTop = container.scrollHeight - container.clientHeight;
+    }
+  }, [conversations.length]);
 
   return (
     <section className="shadow-md mt-5 text-white border rounded-t-md rounded-b-md">
@@ -37,9 +41,14 @@ export default function Chatbox() {
           return (
             <div
               key={i}
+              style={
+                i % 2 === 0
+                  ? { backgroundColor: chatbotConfig.botMessageBgColor, color: chatbotConfig.botMessageTextColor }
+                  : { backgroundColor: chatbotConfig.userMessageBgColor, color: chatbotConfig.userMesssageTextColor }
+              }
               className={`${
-                i % 2 === 0 ? "float-right text-black border" : "float-left border text-white bg-blue-500"
-              } mt-3 text-sm w-[75%] rounded-md`}
+                i % 2 === 0 ? "float-right text-black" : "float-left  text-white"
+              } mt-3 text-sm w-[75%] rounded-md border`}
             >
               <p className="px-3 py-2">{conversation}</p>
             </div>
@@ -51,7 +60,7 @@ export default function Chatbox() {
           {replyOptions.responseOptions?.map((message: any, i: number) => {
             return (
               <button
-                onClick={(e) => nextMessage(e,message)}
+                onClick={(e) => nextMessage(e, message)}
                 className={`px-3 text-left w-full text-black  text-sm py-2 border-t-2`}
                 key={message.id}
               >

@@ -19,6 +19,10 @@ export default function Bot() {
       titleBgColor: "#000000",
       btnBgColor: "black",
       title: "Robochat",
+      botMessageBgColor: "#ffffff",
+      botMessageTextColor: "#000000",
+      userMessageBgColor: "#4682B4",
+      userMesssageTextColor: "#ffffff",
       messages: {
         1: {
           message: "Hello beautiful person how can I help you today (BOT 1)?",
@@ -88,6 +92,10 @@ export default function Bot() {
       titleBgColor: "red",
       btnBgColor: "red",
       title: "ChatGPT Killer BOT",
+      botMessageBgColor: "#DC143C",
+      botMessageTextColor: "#ffffff",
+      userMessageBgColor: "#228B22",
+      userMesssageTextColor: "#ffffff",
       messages: {
         1: {
           message: "Hello beautiful person how can I help you today (BOT 2)?",

@@ -5,7 +5,11 @@ export interface ChatbotModel {
   title: string;
   btnBgColor: string;
   initialMessage: string;
-  messages:{}
+  botMessageBgColor: string;
+  botMessageTextColor: string;
+  userMessageBgColor: string;
+  userMesssageTextColor: string;
+  messages: {};
 }
 
 export interface AppContextModel {

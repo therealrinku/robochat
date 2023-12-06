@@ -12,6 +12,10 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     title: "Robochat",
     btnBgColor: "black",
     initialMessage: "Hello Beautiful Human, how can I help you today?",
+    botMessageBgColor: "#ffffff",
+    botMessageTextColor: "#000000",
+    userMessageBgColor: "#4682B4",
+    userMesssageTextColor: "#ffffff",
     messages: {
       1: {
         message: "Hello beautiful person how can I help you today (BOT 1)?",
