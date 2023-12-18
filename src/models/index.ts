@@ -9,10 +9,15 @@ export interface ChatbotModel {
   botMessageTextColor: string;
   userMessageBgColor: string;
   userMesssageTextColor: string;
-  messages: {};
+  messages: object;
 }
 
 export interface AppContextModel {
   chatbotConfig: ChatbotModel;
   setChatbotConfig: Function;
+  addMessage: Function;
+  deleteMessage: Function;
+  deleteResponse: Function;
+  addResponse: Function;
+  updateNextMessage: Function;
 }

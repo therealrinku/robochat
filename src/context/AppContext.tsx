@@ -18,62 +18,13 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     userMesssageTextColor: "#ffffff",
     messages: {
       1: {
-        message: "Hello beautiful person how can I help you today (BOT 1)?",
-        responseOptions: [
+        id: 1,
+        message: "Hello beautiful person how can I help you today?",
+        replyOptions: [
           {
             id: "1A",
-            message: "I need some help with verify service BOT 1.",
-            nextMessageIndex: 2,
-          },
-          {
-            id: "1B",
-            message: "I want to learn more about toll free number verification process BOT 1.",
-            nextMessageIndex: 2,
-          },
-          {
-            id: "1C",
-            message: "I want to know more about the cash back process for my subscription BOT 1.",
-            nextMessageIndex: 2,
-          },
-        ],
-      },
-      2: {
-        message: "Do you want to know more about option 2 BOT 1?",
-        responseOptions: [
-          {
-            id: "2A",
-            message: "Halleluah 2A BOT 1",
-            nextMessageIndex: 3,
-          },
-          {
-            id: "2B",
-            message: "Halleluah 2B BOT 1",
-            nextMessageIndex: 3,
-          },
-          {
-            id: "2C",
-            message: "Halleluah 2C BOT 1",
-            nextMessageIndex: 2,
-          },
-        ],
-      },
-      3: {
-        message: "How can we help you better about option 3 BOT 1?",
-        responseOptions: [
-          {
-            id: "3A",
-            message: "Halleluah 3A BOT 1",
-            nextMessageIndex: 2,
-          },
-          {
-            id: "3B",
-            message: "Halleluah 3B BOT 1",
-            nextMessageIndex: 2,
-          },
-          {
-            id: "3C",
-            message: "Halleluah 3C BOT 1",
-            nextMessageIndex: 2,
+            message: "I need some help with verify service BOT 2.",
+            nextMessageId: 2,
           },
         ],
       },
@@ -81,5 +32,103 @@ export function AppContextProvider({ children }: PropsWithChildren) {
   };
   const [chatbotConfig, setChatbotConfig] = useState(defaultConfig);
 
-  return <AppContext.Provider value={{ chatbotConfig, setChatbotConfig }}>{children}</AppContext.Provider>;
+  function getRandomId() {
+    const newKey = Math.floor(Math.random() * Date.now());
+    return newKey;
+  }
+
+  function addMessage(message: string) {
+    const newKey = getRandomId();
+
+    setChatbotConfig((prev) => {
+      return {
+        ...prev,
+        messages: {
+          ...prev.messages,
+          [newKey]: {
+            id: newKey,
+            message: message,
+            replyOptions: [],
+          },
+        },
+      };
+    });
+  }
+
+  function deleteMessage(messageKey: string) {
+    const lastMessages = chatbotConfig.messages;
+    //@ts-ignore
+    delete lastMessages[messageKey];
+    setChatbotConfig((prev) => {
+      return {
+        ...prev,
+        messages: lastMessages,
+      };
+    });
+  }
+
+  function addResponse(messageId: string, response: string) {
+    const newKey = getRandomId();
+
+    const lastMessages = chatbotConfig.messages;
+    console.log( lastMessages, messageId, response,"log")
+    //@ts-ignore
+    lastMessages[messageId].replyOptions = [
+      //@ts-ignore
+      ...lastMessages[messageId].replyOptions,
+      {
+        id: newKey,
+        message: response,
+        nextMessageId: messageId,
+      },
+    ];
+    setChatbotConfig((prev) => {
+      return {
+        ...prev,
+        messages: lastMessages,
+      };
+    });
+  }
+
+  function deleteResponse(messageId: string, responseId: string) {
+    const lastMessages = chatbotConfig.messages;
+    //@ts-ignore
+    lastMessages[messageId].replyOptions = lastMessages[messageId].replyOptions.filter(
+      (rsp: any) => rsp.id !== responseId
+    );
+    setChatbotConfig((prev) => {
+      return {
+        ...prev,
+        messages: lastMessages,
+      };
+    });
+  }
+
+  function updateNextMessage(messageId: string, responseIndex: string, nextMessageId: string) {
+    const lastMessages = chatbotConfig.messages;
+    //@ts-ignore
+    lastMessages[messageId].replyOptions[responseIndex].nextMessageId = nextMessageId;
+    setChatbotConfig((prev) => {
+      return {
+        ...prev,
+        messages: lastMessages,
+      };
+    });
+  }
+
+  return (
+    <AppContext.Provider
+      value={{
+        chatbotConfig,
+        setChatbotConfig,
+        addMessage,
+        deleteMessage,
+        addResponse,
+        deleteResponse,
+        updateNextMessage,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 }

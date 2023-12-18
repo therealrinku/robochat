@@ -13,7 +13,7 @@ export default function Chatbox() {
     e.preventDefault();
 
     //@ts-ignore
-    setReplyOptions(chatbotConfig.messages[message.nextMessageIndex]);
+    setReplyOptions(chatbotConfig.messages[message.nextMessageId]);
     //@ts-ignore
     setConversations((prev) => [...prev, replyOptions.message, message.message]);
   }
@@ -56,8 +56,10 @@ export default function Chatbox() {
         })}
 
         <div className="w-[75%] float-right border rounded-t-md rounded-b-md mt-3">
-          <p className="px-3 py-2 text-black text-sm">{replyOptions.message}</p>
-          {replyOptions.responseOptions?.map((message: any, i: number) => {
+          {/*@ts-ignore */}
+          <p className="px-3 py-2 text-black text-sm">{replyOptions?.message}</p>
+          {/*@ts-ignore */}
+          {replyOptions?.replyOptions?.map((message: any, i: number) => {
             return (
               <button
                 onClick={(e) => nextMessage(e, message)}

@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
-import { LuChevronsUpDown } from "react-icons/lu";
 import useAppContext from "../../hooks/useAppContext";
+import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 
 export default function MessageBoxStyling() {
   const { chatbotConfig, setChatbotConfig } = useAppContext();
@@ -10,15 +10,15 @@ export default function MessageBoxStyling() {
   return (
     <Fragment>
       <button
-        className={`${!isExpanded && "border-b"} border-t px-5 py-2 flex items-center justify-between w-full`}
+        className={`border-t px-5 py-2 flex items-center justify-between w-full`}
         onClick={() => setIsExpanded((prev) => !prev)}
       >
         <p className="font-bold">Message Box Styling</p>
-        <LuChevronsUpDown size={16} />
+        {isExpanded ? <AiOutlineCaretUp size={18} /> : <AiOutlineCaretDown size={18} />}
       </button>
 
       {isExpanded && (
-        <div className="border-b  pb-5 px-5 flex flex-col gap-5">
+        <div className="pb-5 px-5 flex flex-col gap-5 mt-2">
           <section className="flex gap-2 items-center">
             <label htmlFor="botMessageBgColor">Bot Message Bg Color</label>
             <input
