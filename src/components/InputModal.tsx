@@ -12,22 +12,24 @@ export default function InputModal({ initialValue, onSubmit, onClose }: Props) {
 
   return (
     <Fragment>
-      <div onClick={onClose} className="fixed h-full w-full bg-black opacity-60 left-0" />
+      <div onClick={onClose} className="fixed h-full w-full bg-black opacity-90 left-0" />
 
-      <div className="fixed flex items-center gap-5  top-20 bg-green-500 inset-x-0 mx-auto w-[300px] z-50 p-5">
+      <div className="fixed flex items-center gap-5 border top-20 bg-white inset-x-0 mx-auto w-[300px] z-50 p-5">
         <input
           className="border outline-none pl-2 py-1 w-full"
           type="text"
+          placeholder="Reply"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
         <button
+          disabled={!value.trim()}
           onClick={() => {
             onSubmit(value);
             onClose();
           }}
         >
-          <AiOutlineCheck color="white" size={20} />
+          <AiOutlineCheck color="black" size={20} />
         </button>
       </div>
     </Fragment>

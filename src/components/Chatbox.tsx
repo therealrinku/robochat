@@ -3,9 +3,16 @@ import { useEffect, useRef, useState } from "react";
 export default function Chatbox({ chatbotConfig }: any) {
   const messageViewRef = useRef(null);
 
+  const firstKey = Object.keys(chatbotConfig.messages)?.[0];
+
   //@ts-ignore
-  const [replyOptions, setReplyOptions] = useState(chatbotConfig?.messages[1] ?? {});
+  const [replyOptions, setReplyOptions] = useState(chatbotConfig?.messages?.[firstKey] ?? {});
   const [conversations, setConversations] = useState([]);
+
+  useEffect(() => {
+    //@ts-ignore
+    setReplyOptions(chatbotConfig?.messages?.[firstKey] ?? {});
+  }, [firstKey]);
 
   function nextMessage(e: any, message: any) {
     e.preventDefault();

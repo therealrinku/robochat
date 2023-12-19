@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
 import { useEffect, useState } from "react";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { ChatbotModel } from "../models";
 
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [chatbotId, setChatbotId] = useState("");
   const [chatbotIdInput, setChatbotIdInput] = useState("");
   const [botNotFound, setBotNotFound] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { chatbotConfig, setChatbotConfig } = useAppContext();
 
@@ -35,6 +35,9 @@ export default function Dashboard() {
   useEffect(() => {
     (async function () {
       if (!chatbotId) return;
+
+      setIsLoading(true);
+
       const docRef = doc(db, "bots", chatbotId ?? "");
       const docSnap = await getDoc(docRef);
       const data: any = docSnap.data();
@@ -65,6 +68,27 @@ export default function Dashboard() {
     alert("Save success!!");
   }
 
+  async function createBrandNewBot() {
+    setIsLoading(true);
+
+    const newBot = await addDoc(collection(db, "bots"), {
+      messages: chatbotConfig.messages,
+      configurations: chatbotConfig.configurations,
+    });
+
+    setChatbotId(newBot.id);
+    setIsLoading(false);
+    alert("New bot created successfully!!");
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen w-full">
+        <p>Bot {chatbotId} is loading.....</p>
+      </div>
+    );
+  }
+
   if (!chatbotId)
     return (
       <div className="flex flex-col items-center justify-center h-screen w-full">
@@ -81,12 +105,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        <button
-          disabled
-          className="border py-1 px-3 mt-2 w-[235px] bg-gray-500 text-sm text-white"
-          onClick={chatbotIdInput.trim() ? () => setChatbotId(chatbotIdInput) : () => {}}
-        >
-          <p>Create new bot (coming soon)</p>
+        <button className="border py-1 px-3 mt-2 w-[235px] bg-green-500 text-sm text-white" onClick={createBrandNewBot}>
+          <p>Create new bot</p>
         </button>
       </div>
     );
@@ -106,14 +126,6 @@ export default function Dashboard() {
         </button>
       </div>
     );
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen w-full">
-        <p>Bot {chatbotId} is loading.....</p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col md:flex-row justify-center mx-auto w-full max-w-[1000px] h-screen">
