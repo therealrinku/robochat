@@ -38,6 +38,7 @@ export default function TitlebarStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="chatbotTextColor">Icon Url</label>
             <input
+              value={chatbotConfig.configurations?.icon}
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
