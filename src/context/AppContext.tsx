@@ -24,7 +24,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
           {
             id: "1A",
             message: "I need some help with verify service BOT 2.",
-            nextMessageId: 2,
+            nextMessageId: 1,
           },
         ],
       },
