@@ -3,10 +3,13 @@ import MessageManager from "../components/MessageManager";
 import MessageBoxStyling from "../components/Styling/MessageBoxStyling";
 import TitlebarStyling from "../components/Styling/TitlebarStyling";
 import { useNavigate } from "react-router-dom";
+import useAppContext from "../hooks/useAppContext";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const chatbotId = Math.floor(Math.random() * Date.now());
+
+  const { chatbotConfig } = useAppContext();
 
   function copyEmbedCode() {
     const iframeUrl = `
@@ -46,7 +49,7 @@ export default function Dashboard() {
       </div>
 
       <div className="w-full pl-5 w-full max-w-[350px]">
-        <Chatbox />
+        <Chatbox chatbotConfig={chatbotConfig} />
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
 export interface ChatbotModel {
-  icon: string;
-  titleTextColor: string;
-  titleBgColor: string;
-  title: string;
-  btnBgColor: string;
-  initialMessage: string;
-  botMessageBgColor: string;
-  botMessageTextColor: string;
-  userMessageBgColor: string;
-  userMesssageTextColor: string;
+  configurations: {
+    icon: string;
+    titleTextColor: string;
+    titleBgColor: string;
+    title: string;
+    btnBgColor: string;
+    initialMessage: string;
+    botMessageBgColor: string;
+    botMessageTextColor: string;
+    userMessageBgColor: string;
+    userMesssageTextColor: string;
+  };
   messages: object;
 }
 

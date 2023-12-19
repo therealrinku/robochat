@@ -22,8 +22,13 @@ export default function TitlebarStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="chatbotTitle">Title</label>
             <input
-              value={chatbotConfig.title}
-              onChange={(e) => setChatbotConfig({ ...chatbotConfig, title: e.target.value })}
+              value={chatbotConfig.configurations?.title}
+              onChange={(e) =>
+                setChatbotConfig({
+                  ...chatbotConfig,
+                  configurations: { ...chatbotConfig.configurations, title: e.target.value },
+                })
+              }
               name="chatbotTitle"
               className="border outline-none pl-2 py-1"
               type="text"
@@ -31,25 +36,33 @@ export default function TitlebarStyling() {
           </section>
 
           <section className="flex gap-2 items-center">
-            <label htmlFor="chatbotTextColor">Icon</label>
+            <label htmlFor="chatbotTextColor">Icon Url</label>
             <input
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
-                  icon: e.target.files?.[0] ? URL.createObjectURL(e.target.files[0]) : "",
+                  configurations: {
+                    ...chatbotConfig.configurations,
+                    icon: e.target.value,
+                  },
                 })
               }
               name="chatbotTextColor"
               className=" border outline-none p-1  bg-white"
-              type="file"
+              type="text"
             />
           </section>
 
           <section className="flex gap-2 items-center">
             <label htmlFor="chatbotBg">Background color</label>
             <input
-              value={chatbotConfig.titleBgColor}
-              onChange={(e) => setChatbotConfig({ ...chatbotConfig, titleBgColor: e.target.value })}
+              value={chatbotConfig.configurations?.titleBgColor}
+              onChange={(e) =>
+                setChatbotConfig({
+                  ...chatbotConfig,
+                  configurations: { ...chatbotConfig.configurations, titleBgColor: e.target.value },
+                })
+              }
               name="chatbotBg"
               className="border outline-none p-1  bg-white"
               type="color"
@@ -59,8 +72,13 @@ export default function TitlebarStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="chatbotTextColor">Text color</label>
             <input
-              value={chatbotConfig.titleTextColor}
-              onChange={(e) => setChatbotConfig({ ...chatbotConfig, titleTextColor: e.target.value })}
+              value={chatbotConfig.configurations?.titleTextColor}
+              onChange={(e) =>
+                setChatbotConfig({
+                  ...chatbotConfig,
+                  configurations: { ...chatbotConfig.configurations, titleTextColor: e.target.value },
+                })
+              }
               name="chatbotTextColor"
               className="border outline-none p-1  bg-white"
               type="color"

@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import useAppContext from "../hooks/useAppContext";
 
-export default function Chatbox() {
-  const { chatbotConfig } = useAppContext();
+export default function Chatbox({ chatbotConfig }: any) {
   const messageViewRef = useRef(null);
 
   //@ts-ignore
@@ -29,11 +27,14 @@ export default function Chatbox() {
   return (
     <section className="shadow-md mt-5 text-white border rounded-t-md rounded-b-md">
       <div
-        style={{ backgroundColor: chatbotConfig.titleBgColor, color: chatbotConfig.titleTextColor }}
+        style={{
+          backgroundColor: chatbotConfig.configurations?.titleBgColor,
+          color: chatbotConfig.configurations?.titleTextColor,
+        }}
         className="px-2 py-3 chatbot-title-bg rounded-t-md flex items-center gap-2"
       >
-        <img src={chatbotConfig.icon} className="chatbot-icon object-cover w-5 h-5" />
-        <p>{chatbotConfig.title}</p>
+        <img src={chatbotConfig.configurations?.icon} className="chatbot-icon object-cover w-5 h-5" />
+        <p>{chatbotConfig.configurations?.title}</p>
       </div>
 
       <div className="bg-white px-2 h-[400px] p-3 overflow-y-auto" ref={messageViewRef}>
@@ -43,8 +44,14 @@ export default function Chatbox() {
               key={i}
               style={
                 i % 2 === 0
-                  ? { backgroundColor: chatbotConfig.botMessageBgColor, color: chatbotConfig.botMessageTextColor }
-                  : { backgroundColor: chatbotConfig.userMessageBgColor, color: chatbotConfig.userMesssageTextColor }
+                  ? {
+                      backgroundColor: chatbotConfig.configurations?.botMessageBgColor,
+                      color: chatbotConfig.configurations?.botMessageTextColor,
+                    }
+                  : {
+                      backgroundColor: chatbotConfig.configurations?.userMessageBgColor,
+                      color: chatbotConfig.configurations?.userMesssageTextColor,
+                    }
               }
               className={`${
                 i % 2 === 0 ? "float-right text-black" : "float-left  text-white"

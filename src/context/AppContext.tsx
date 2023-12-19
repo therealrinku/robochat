@@ -6,16 +6,18 @@ export const AppContext = createContext<AppContextModel>({});
 
 export function AppContextProvider({ children }: PropsWithChildren) {
   const defaultConfig = {
-    icon: "https://cdn-icons-png.flaticon.com/128/11461/11461820.png",
-    titleTextColor: "#ffffff",
-    titleBgColor: "#000000",
-    title: "Robochat",
-    btnBgColor: "black",
-    initialMessage: "Hello Beautiful Human, how can I help you today?",
-    botMessageBgColor: "#ffffff",
-    botMessageTextColor: "#000000",
-    userMessageBgColor: "#4682B4",
-    userMesssageTextColor: "#ffffff",
+    configurations: {
+      icon: "https://cdn-icons-png.flaticon.com/128/11461/11461820.png",
+      titleTextColor: "#ffffff",
+      titleBgColor: "#000000",
+      title: "Robochat",
+      btnBgColor: "black",
+      initialMessage: "Hello Beautiful Human, how can I help you today?",
+      botMessageBgColor: "#ffffff",
+      botMessageTextColor: "#000000",
+      userMessageBgColor: "#4682B4",
+      userMesssageTextColor: "#ffffff",
+    },
     messages: {
       1: {
         id: 1,
@@ -71,7 +73,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     const newKey = getRandomId();
 
     const lastMessages = chatbotConfig.messages;
-    console.log( lastMessages, messageId, response,"log")
+    console.log(lastMessages, messageId, response, "log");
     //@ts-ignore
     lastMessages[messageId].replyOptions = [
       //@ts-ignore

@@ -22,11 +22,11 @@ export default function MessageBoxStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="botMessageBgColor">Bot Message Bg Color</label>
             <input
-              value={chatbotConfig.botMessageBgColor}
+              value={chatbotConfig.configurations?.botMessageBgColor}
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
-                  botMessageBgColor: e.target.value,
+                  configurations: { ...chatbotConfig.configurations, botMessageBgColor: e.target.value },
                 })
               }
               name="botMessageBgColor"
@@ -38,11 +38,11 @@ export default function MessageBoxStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="botMessageTextColor">Bot Message Text Color</label>
             <input
-              value={chatbotConfig.botMessageTextColor}
+              value={chatbotConfig.configurations?.botMessageTextColor}
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
-                  botMessageTextColor: e.target.value,
+                  configurations: { ...chatbotConfig.configurations, botMessageTextColor: e.target.value },
                 })
               }
               name="botMessageTextColor"
@@ -54,11 +54,11 @@ export default function MessageBoxStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="userMessageBgColor">User Message Bg Color</label>
             <input
-              value={chatbotConfig.userMessageBgColor}
+              value={chatbotConfig.configurations?.userMessageBgColor}
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
-                  userMessageBgColor: e.target.value,
+                  configurations: { ...chatbotConfig.configurations, userMessageBgColor: e.target.value },
                 })
               }
               name="userMessageBgColor"
@@ -70,11 +70,11 @@ export default function MessageBoxStyling() {
           <section className="flex gap-2 items-center">
             <label htmlFor="userMesssageTextColor">User Message Text Color</label>
             <input
-              value={chatbotConfig.userMesssageTextColor}
+              value={chatbotConfig.configurations?.userMesssageTextColor}
               onChange={(e) =>
                 setChatbotConfig({
                   ...chatbotConfig,
-                  userMesssageTextColor: e.target.value,
+                  configurations: { ...chatbotConfig.configurations, userMesssageTextColor: e.target.value },
                 })
               }
               name="userMesssageTextColor"
