@@ -2,6 +2,8 @@
 
 Robochatbot is a web app for creating robust classic chatbots for your company which will help user to get quick answers to the common FAQ.
 
+![image](https://github.com/therealrinku/robochatbot/assets/76877078/44749d0b-17a9-4009-8c77-db7592fe569f)
+
 ## Features
 
 - **Create your unique chatbot:** Create your chatbot that fits your needs.
