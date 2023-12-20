@@ -33,6 +33,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     },
   };
   const [chatbotConfig, setChatbotConfig] = useState(defaultConfig);
+  const [currentUser, setCurrentUser] = useState(null);
 
   function getRandomId() {
     const newKey = Math.floor(Math.random() * Date.now());
@@ -128,6 +129,8 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         addResponse,
         deleteResponse,
         updateNextMessage,
+        currentUser,
+        setCurrentUser,
       }}
     >
       {children}

@@ -22,4 +22,6 @@ export interface AppContextModel {
   deleteResponse: Function;
   addResponse: Function;
   updateNextMessage: Function;
+  currentUser: null | object;
+  setCurrentUser: Function;
 }
