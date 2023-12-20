@@ -131,6 +131,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
         updateNextMessage,
         currentUser,
         setCurrentUser,
+        defaultConfig
       }}
     >
       {children}

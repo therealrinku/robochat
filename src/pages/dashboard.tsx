@@ -16,7 +16,7 @@ export default function Dashboard() {
   const [embedCodeCopied, setEmbedCodeCopied] = useState(false);
 
   const [chatbots, setChatbots] = useState({});
-  const { chatbotConfig, setChatbotConfig, currentUser }: any = useAppContext();
+  const { chatbotConfig, setChatbotConfig, currentUser, setCurrentUser, defaultConfig }: any = useAppContext();
 
   function copyEmbedCode() {
     const iframeUrl = `
@@ -104,7 +104,6 @@ export default function Dashboard() {
     });
 
     setIsLoading(false);
-    alert("New bot created successfully!!");
   }
 
   if (isLoading) {
@@ -159,6 +158,19 @@ export default function Dashboard() {
       <div className="border-r border-l w-full md:w-[50%] overflow-y-auto pb-5">
         <div className="text-sm flex flex-col">
           <p className="px-5 pt-2 text-lg font-bold">Customize your chatbot</p>
+          <p className="px-5 pt-2 gap-2 flex text-sm font-bold">
+            {currentUser.email}{" "}
+            <button
+              onClick={() => {
+                setCurrentUser(null);
+                setChatbotConfig(defaultConfig);
+              }}
+              className="underline"
+            >
+              logout
+            </button>
+          </p>
+
           <p className="text-xs px-5 my-5">
             Selected Chatbot :{" "}
             <select
@@ -194,13 +206,17 @@ export default function Dashboard() {
             <button
               disabled={isSaving}
               onClick={saveBotConfig}
-              className={`copy-button w-20 border rounded-md p-1 ${isSaved && "bg-green-500 text-white"}`}
+              className={`hover:border-green-500 copy-button w-20 border rounded-md p-1 ${
+                isSaved && "bg-green-500 text-white"
+              }`}
             >
               {isSaving ? "Saving..." : isSaved ? "Saved!" : "Save"}
             </button>
             <button
               onClick={copyEmbedCode}
-              className={`copy-button w-48 ml-2 border rounded-md p-1 ${embedCodeCopied && "bg-green-500 text-white"}`}
+              className={`hover:border-green-500 copy-button w-48 ml-2 border rounded-md p-1 ${
+                embedCodeCopied && "bg-green-500 text-white"
+              }`}
             >
               {embedCodeCopied ? "Copied embed code!" : "Copy embed code"}
             </button>

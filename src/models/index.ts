@@ -24,4 +24,5 @@ export interface AppContextModel {
   updateNextMessage: Function;
   currentUser: null | object;
   setCurrentUser: Function;
+  defaultConfig:object
 }
