@@ -11,6 +11,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       {!currentUser ? (
         <Routes>
+          <Route path="/bot/:botId" Component={Bot} />
           <Route path="*" Component={Login} />
         </Routes>
       ) : (

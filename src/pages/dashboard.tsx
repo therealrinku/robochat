@@ -2,22 +2,21 @@ import Chatbox from "../components/Chatbox";
 import MessageManager from "../components/MessageManager";
 import MessageBoxStyling from "../components/Styling/MessageBoxStyling";
 import TitlebarStyling from "../components/Styling/TitlebarStyling";
-import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
 import { useEffect, useState } from "react";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { ChatbotModel } from "../models";
+import { BsRobot } from "react-icons/bs";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const [chatbotId, setChatbotId] = useState("");
-  const [chatbotIdInput, setChatbotIdInput] = useState("");
-  const [botNotFound, setBotNotFound] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [embedCodeCopied, setEmbedCodeCopied] = useState(false);
 
-  const { chatbotConfig, setChatbotConfig } = useAppContext();
+  const [chatbots, setChatbots] = useState({});
+  const { chatbotConfig, setChatbotConfig, currentUser }: any = useAppContext();
 
   function copyEmbedCode() {
     const iframeUrl = `
@@ -29,43 +28,52 @@ export default function Dashboard() {
     />
 `;
     window.navigator.clipboard.writeText(iframeUrl);
-    alert("Copied");
+    setEmbedCodeCopied(true);
+    setTimeout(() => setEmbedCodeCopied(false), 2024);
   }
 
   useEffect(() => {
     (async function () {
-      if (!chatbotId) return;
+      if (!currentUser.email) return;
 
       setIsLoading(true);
 
-      const docRef = doc(db, "bots", chatbotId ?? "");
+      const docRef = doc(db, "bot_owners", currentUser.email ?? "");
       const docSnap = await getDoc(docRef);
       const data: any = docSnap.data();
 
-      setIsLoading(false);
+      const botIds = data.bots ?? [];
 
-      if (!data) {
-        setBotNotFound(true);
-        return;
+      for (let botId of botIds) {
+        const docRef = doc(db, "bots", botId ?? "");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.data()) {
+          setChatbots((prev) => {
+            return {
+              ...prev,
+              [botId]: {
+                bot_id: botId,
+                ...docSnap.data(),
+              },
+            };
+          });
+        }
       }
-
-      setChatbotConfig((prev: ChatbotModel) => {
-        return {
-          ...prev,
-          configurations: data.configurations,
-          messages: data.messages,
-        };
-      });
+      setIsLoading(false);
     })();
-  }, [chatbotId]);
+  }, [currentUser?.email]);
 
   async function saveBotConfig() {
+    setIsSaving(true);
+
     await setDoc(doc(db, "bots", chatbotId ?? ""), {
       messages: chatbotConfig.messages,
       configurations: chatbotConfig.configurations,
     });
 
-    alert("Save success!!");
+    setIsSaving(false);
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 2023);
   }
 
   async function createBrandNewBot() {
@@ -77,6 +85,24 @@ export default function Dashboard() {
     });
 
     setChatbotId(newBot.id);
+    setChatbots((prev) => {
+      return {
+        ...prev,
+        [newBot.id]: {
+          bot_id: newBot.id,
+          messages: chatbotConfig.messages,
+          configurations: chatbotConfig.configurations,
+        },
+      };
+    });
+
+    const uniqueBotIdsSet = new Set([...Object.keys(chatbots), newBot.id]);
+    const uniqueBotIds = Array.from(uniqueBotIdsSet);
+    // adding the new bot id to the list of bots of the owner
+    await setDoc(doc(db, "bot_owners", currentUser.email), {
+      bots: uniqueBotIds,
+    });
+
     setIsLoading(false);
     alert("New bot created successfully!!");
   }
@@ -93,36 +119,37 @@ export default function Dashboard() {
     return (
       <div className="flex flex-col items-center justify-center h-screen w-full">
         <p className="mb-5 text-lg italic">Robochatbot</p>
-        <div className="flex items-center gap-2">
-          <input
-            placeholder="Your BOT ID"
-            className="border outline-none pl-2 py-1 w-[200px]"
-            value={chatbotIdInput}
-            onChange={(e) => setChatbotIdInput(e.target.value)}
-          />
-          <button onClick={chatbotIdInput.trim() ? () => setChatbotId(chatbotIdInput) : () => {}}>
-            <AiOutlineCheckCircle size={25} />
-          </button>
+
+        {!Object.keys(chatbots).length && <p className="text-red-500">No any bots founds, create a new one!</p>}
+
+        <div className="flex flex-col gap-5 my-5">
+          {Object.values(chatbots).map((chatbot: any) => {
+            return (
+              <button
+                className="border rounded-md hover:bg-green-500 hover:text-white  p-3 flex items-center gap-2 text-sm"
+                onClick={() => {
+                  setChatbotId(chatbot.bot_id);
+                  setChatbotConfig((prev: any) => {
+                    return {
+                      ...prev,
+                      ...chatbot,
+                    };
+                  });
+                }}
+                key={chatbot.bot_id}
+              >
+                <BsRobot size={20} />
+                {chatbot.configurations?.title}
+              </button>
+            );
+          })}
         </div>
 
-        <button className="border py-1 px-3 mt-2 w-[235px] bg-green-500 text-sm text-white" onClick={createBrandNewBot}>
-          <p>Create new bot</p>
-        </button>
-      </div>
-    );
-
-  if (botNotFound)
-    return (
-      <div className="flex flex-col items-center justify-center h-screen w-full">
-        <p>Bot {chatbotId} not found!</p>
         <button
-          className="border py-1 px-3 mt-2 w-[235px] bg-green-500 text-sm text-white"
-          onClick={() => {
-            setBotNotFound(false);
-            setChatbotId("");
-          }}
+          className="border rounded-md p-3 mt-2 w-[235px] bg-green-500 text-sm text-white"
+          onClick={createBrandNewBot}
         >
-          Try again
+          <p>Create new bot</p>
         </button>
       </div>
     );
@@ -133,25 +160,49 @@ export default function Dashboard() {
         <div className="text-sm flex flex-col">
           <p className="px-5 pt-2 text-lg font-bold">Customize your chatbot</p>
           <p className="text-xs px-5 my-5">
-            chatbotID: <span className="font-bold">{chatbotId}</span>
+            Selected Chatbot :{" "}
+            <select
+              value={chatbotId}
+              className="bg-inherit outline-none border p-1"
+              onChange={(e) => {
+                setChatbotId(e.target.value);
+                setChatbotConfig((prev: any) => {
+                  return {
+                    ...prev,
+                    //@ts-ignore
+                    ...chatbots[e.target.value],
+                  };
+                });
+              }}
+            >
+              {Object.values(chatbots).map((chatbot: any) => {
+                return (
+                  <option value={chatbot.bot_id} key={chatbot.bot_id}>
+                    {chatbot.configurations?.title}
+                  </option>
+                );
+              })}
+            </select>
           </p>
+          <p className="text-xs px-5 mb-3">ChatbotID: {chatbotId}</p>
 
           <TitlebarStyling />
           <MessageBoxStyling />
           <MessageManager />
 
           <div className="flex ml-5 text-sm mt-5">
-            <button onClick={saveBotConfig} className="copy-button w-20  p-1 bg-green-500 text-white">
-              Save
-            </button>
-            <button onClick={copyEmbedCode} className="copy-button w-48 ml-5 p-1 bg-green-500 text-white">
-              Copy embed code
+            <button
+              disabled={isSaving}
+              onClick={saveBotConfig}
+              className={`copy-button w-20 border rounded-md p-1 ${isSaved && "bg-green-500 text-white"}`}
+            >
+              {isSaving ? "Saving..." : isSaved ? "Saved!" : "Save"}
             </button>
             <button
-              onClick={() => navigate(`/bot/${chatbotId}`)}
-              className="copy-button w-20 ml-5 p-1 bg-green-500 text-white"
+              onClick={copyEmbedCode}
+              className={`copy-button w-48 ml-2 border rounded-md p-1 ${embedCodeCopied && "bg-green-500 text-white"}`}
             >
-              See
+              {embedCodeCopied ? "Copied embed code!" : "Copy embed code"}
             </button>
           </div>
         </div>
