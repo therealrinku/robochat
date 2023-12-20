@@ -82,6 +82,22 @@ export default function MessageBoxStyling() {
               type="color"
             />
           </section>
+
+          <section className="flex gap-2 items-center">
+            <label htmlFor="botMessageTextColor">Bot toggle Button Bg</label>
+            <input
+              value={chatbotConfig.configurations?.btnBgColor}
+              onChange={(e) =>
+                setChatbotConfig({
+                  ...chatbotConfig,
+                  configurations: { ...chatbotConfig.configurations, btnBgColor: e.target.value },
+                })
+              }
+              name="botMessageTextColor"
+              className=" border outline-none p-1  bg-white"
+              type="color"
+            />
+          </section>
         </div>
       )}
     </Fragment>
