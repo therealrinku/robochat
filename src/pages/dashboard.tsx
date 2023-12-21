@@ -202,6 +202,25 @@ export default function Dashboard() {
           <MessageBoxStyling />
           <MessageManager />
 
+          <section className="flex items-center px-5 gap-2 mt-5">
+            <input
+              onChange={() =>
+                setChatbotConfig((prev: any) => {
+                  return {
+                    ...prev,
+                    configurations: {
+                      ...prev.configurations,
+                      isActive: !prev.configurations.isActive,
+                    },
+                  };
+                })
+              }
+              defaultChecked={chatbotConfig.configurations?.isActive}
+              type="checkbox"
+            />
+            Active
+          </section>
+
           <div className="flex ml-5 text-sm mt-5">
             <button
               disabled={isSaving}

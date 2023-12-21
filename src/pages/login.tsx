@@ -1,4 +1,4 @@
-import { AiFillGoogleCircle } from "react-icons/ai";
+import { FaGoogle } from "react-icons/fa";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import useAppContext from "../hooks/useAppContext";
 
@@ -27,7 +27,7 @@ export default function Login() {
         onClick={onLogin}
         className="flex items-center gap-2 border px-5 py-3 rounded-md hover:bg-green-500 hover:text-white"
       >
-        <AiFillGoogleCircle color="red" size={20} />
+        <FaGoogle size={20} />
         <span>Login with google</span>
       </button>
     </div>

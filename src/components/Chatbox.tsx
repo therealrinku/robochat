@@ -10,12 +10,12 @@ export default function Chatbox({ chatbotConfig }: any) {
   const [replyOptions, setReplyOptions] = useState(chatbotConfig?.messages?.[firstKey] ?? {});
   const [conversations, setConversations] = useState([]);
 
-  const [showChat, setShowChat] = useState(true);
+  const [showChat, setShowChat] = useState(window.location.pathname === "/");
 
   useEffect(() => {
     //@ts-ignore
     setReplyOptions(chatbotConfig?.messages?.[firstKey] ?? {});
-  }, [firstKey]);
+  }, [firstKey, chatbotConfig]);
 
   function nextMessage(e: any, message: any) {
     e.preventDefault();

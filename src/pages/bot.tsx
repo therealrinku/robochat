@@ -9,6 +9,7 @@ export default function Bot() {
   const { botId } = useParams();
 
   const [botConfig, setBotConfig] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async function () {
@@ -17,12 +18,22 @@ export default function Bot() {
       const docSnap = await getDoc(docRef);
       //@ts-ignore
       setBotConfig(docSnap.data() ?? "");
+      setIsLoading(false);
     })();
   }, [botId]);
 
-  console.log("ROBOCHATBOT ALERT: BOT ID IS INVALID");
+  if(isLoading) return <></>
 
-  if (!botConfig) return <></>;
+  if (!botConfig && !isLoading) {
+    console.log(`ROBOCHATBOT ALERT: Bot ${botId} doesn't exist.`);
+    return <></>;
+  }
+
+  //@ts-ignore
+  if (!botConfig.configurations?.isActive && !isLoading) {
+    console.log(`ROBOCHATBOT ALERT: Bot ${botId} is inactive. Please make it active if you want to use it.`);
+    return <></>;
+  }
 
   return (
     <Fragment>

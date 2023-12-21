@@ -17,6 +17,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
       botMessageTextColor: "#000000",
       userMessageBgColor: "#4682B4",
       userMesssageTextColor: "#ffffff",
+      isActive: true
     },
     messages: {
       1: {
