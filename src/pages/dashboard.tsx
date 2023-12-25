@@ -3,10 +3,12 @@ import MessageManager from "../components/MessageManager";
 import MessageBoxStyling from "../components/Styling/MessageBoxStyling";
 import TitlebarStyling from "../components/Styling/TitlebarStyling";
 import useAppContext from "../hooks/useAppContext";
-import { useEffect, useState } from "react";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { Fragment, useEffect, useState } from "react";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { BsRobot } from "react-icons/bs";
+import { BsArrowLeftShort, BsRobot } from "react-icons/bs";
+import { AiFillCrown, AiOutlineCheck, AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { MdInfo, MdOutlinePower } from "react-icons/md";
 
 export default function Dashboard() {
   const [chatbotId, setChatbotId] = useState("");
@@ -14,6 +16,11 @@ export default function Dashboard() {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [embedCodeCopied, setEmbedCodeCopied] = useState(false);
+  const [deletingBotId, setDeletingBotId] = useState<null | string>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const [hasRequestedPremium, setHasRequestedPremium] = useState(false);
+  const [isPremium, setIsPremium] = useState(false);
 
   const [chatbots, setChatbots] = useState({});
   const { chatbotConfig, setChatbotConfig, currentUser, setCurrentUser, defaultConfig }: any = useAppContext();
@@ -34,13 +41,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     (async function () {
-      if (!currentUser.email) return;
+      if (!currentUser.email || Object.keys(chatbots).length) return;
 
       setIsLoading(true);
 
       const docRef = doc(db, "bot_owners", currentUser.email ?? "");
       const docSnap = await getDoc(docRef);
       const data: any = docSnap.data();
+
+      setIsPremium(data.isPremium);
+      setHasRequestedPremium(data.hasRequestedPremium);
 
       const botIds = data.bots ?? [];
 
@@ -79,10 +89,24 @@ export default function Dashboard() {
   async function createBrandNewBot() {
     setIsLoading(true);
 
+    //reset to default config before creating a new bot to prevent copying of current selected bot
+    setChatbotConfig(defaultConfig);
+
     const newBot = await addDoc(collection(db, "bots"), {
       messages: chatbotConfig.messages,
       configurations: chatbotConfig.configurations,
     });
+
+    const uniqueBotIdsSet = new Set([...Object.keys(chatbots), newBot.id]);
+    const uniqueBotIds = Array.from(uniqueBotIdsSet);
+    // adding the new bot id to the list of bots of the owner
+    await setDoc(
+      doc(db, "bot_owners", currentUser.email),
+      {
+        bots: uniqueBotIds,
+      },
+      { merge: true }
+    );
 
     setChatbotId(newBot.id);
     setChatbots((prev) => {
@@ -96,14 +120,48 @@ export default function Dashboard() {
       };
     });
 
-    const uniqueBotIdsSet = new Set([...Object.keys(chatbots), newBot.id]);
-    const uniqueBotIds = Array.from(uniqueBotIdsSet);
-    // adding the new bot id to the list of bots of the owner
-    await setDoc(doc(db, "bot_owners", currentUser.email), {
-      bots: uniqueBotIds,
-    });
-
     setIsLoading(false);
+  }
+
+  async function deleteBot(botId: string) {
+    if (!deletingBotId) {
+      setDeletingBotId(botId);
+      setTimeout(() => setDeletingBotId(null), 3000);
+      return;
+    }
+
+    setIsDeleting(true);
+    await deleteDoc(doc(db, "bots", botId));
+
+    const updatedChatbots = { ...chatbots };
+    //@ts-ignore
+    delete updatedChatbots[botId];
+    setChatbots(updatedChatbots);
+
+    //removing this bot_id from bot_owners data set
+    const uniqueBotIds = Object.keys(updatedChatbots);
+    await setDoc(
+      doc(db, "bot_owners", currentUser.email),
+      {
+        bots: uniqueBotIds,
+      },
+      { merge: true }
+    );
+
+    setIsDeleting(false);
+  }
+
+  async function requestPremium() {
+    await setDoc(
+      doc(db, "bot_owners", currentUser.email),
+      {
+        hasRequestedPremium: true,
+        isPremium: false,
+      },
+      { merge: true }
+    );
+
+    setHasRequestedPremium(true);
   }
 
   if (isLoading) {
@@ -114,138 +172,191 @@ export default function Dashboard() {
     );
   }
 
-  if (!chatbotId)
-    return (
-      <div className="flex flex-col items-center justify-center h-screen w-full">
-        <p className="mb-5 text-lg italic">Robochatbot</p>
-
-        {!Object.keys(chatbots).length && <p className="text-red-500">No any bots founds, create a new one!</p>}
-
-        <div className="flex flex-col gap-5 my-5">
-          {Object.values(chatbots).map((chatbot: any) => {
-            return (
-              <button
-                className="border rounded-md hover:bg-green-500 hover:text-white  p-3 flex items-center gap-2 text-sm"
-                onClick={() => {
-                  setChatbotId(chatbot.bot_id);
-                  setChatbotConfig((prev: any) => {
-                    return {
-                      ...prev,
-                      ...chatbot,
-                    };
-                  });
-                }}
-                key={chatbot.bot_id}
-              >
-                <BsRobot size={20} />
-                {chatbot.configurations?.title}
-              </button>
-            );
-          })}
-        </div>
-
-        <button
-          className="border rounded-md p-3 mt-2 w-[235px] bg-green-500 text-sm text-white"
-          onClick={createBrandNewBot}
-        >
-          <p>Create new bot</p>
-        </button>
-      </div>
-    );
-
   return (
     <div className="flex flex-col md:flex-row justify-center mx-auto w-full max-w-[1000px] h-screen">
       <div className="border-r border-l w-full md:w-[50%] overflow-y-auto pb-5">
         <div className="text-sm flex flex-col">
-          <p className="px-5 pt-2 text-lg font-bold">Customize your chatbot</p>
-          <p className="px-5 pt-2 gap-2 flex text-sm font-bold">
-            {currentUser.email}{" "}
-            <button
-              onClick={() => {
-                setCurrentUser(null);
-                setChatbotConfig(defaultConfig);
-              }}
-              className="underline"
-            >
-              logout
-            </button>
-          </p>
+          <div className="px-5 py-2 flex items-center justify-between">
+            {chatbotId ? (
+              <button onClick={() => setChatbotId("")} className="text-sm flex items-center gap-1">
+                <BsArrowLeftShort size={20} />
+                <p>Back</p>
+              </button>
+            ) : (
+              <span></span>
+            )}
 
-          <p className="text-xs px-5 my-5">
-            Selected Chatbot :{" "}
-            <select
-              value={chatbotId}
-              className="bg-inherit outline-none border p-1"
-              onChange={(e) => {
-                setChatbotId(e.target.value);
-                setChatbotConfig((prev: any) => {
-                  return {
-                    ...prev,
-                    //@ts-ignore
-                    ...chatbots[e.target.value],
-                  };
-                });
-              }}
-            >
-              {Object.values(chatbots).map((chatbot: any) => {
-                return (
-                  <option value={chatbot.bot_id} key={chatbot.bot_id}>
-                    {chatbot.configurations?.title}
-                  </option>
-                );
-              })}
-            </select>
-          </p>
-          <p className="text-xs px-5 mb-3">ChatbotID: {chatbotId}</p>
+            <div className="gap-3 flex items-center text-sm font-bold">
+              <img src={currentUser.photoURL} className="w-6 h-6 rounded-full" />
 
-          <TitlebarStyling />
-          <MessageBoxStyling />
-          <MessageManager />
+              <button
+                disabled={hasRequestedPremium || isPremium}
+                onClick={requestPremium}
+                className={`flex items-center gap-2 ${isPremium && "text-[#FFAD01]"}`}
+              >
+                {isPremium ? "Premium" : hasRequestedPremium ? "Premium pending" : "Upgrade to premium"}
+                <AiFillCrown color="#FFAD01" size={20} />
+              </button>
 
-          <section className="flex items-center px-5 gap-2 mt-5">
-            <input
-              onChange={() =>
-                setChatbotConfig((prev: any) => {
-                  return {
-                    ...prev,
-                    configurations: {
-                      ...prev.configurations,
-                      isActive: !prev.configurations.isActive,
-                    },
-                  };
-                })
-              }
-              defaultChecked={chatbotConfig.configurations?.isActive}
-              type="checkbox"
-            />
-            Active
-          </section>
-
-          <div className="flex ml-5 text-sm mt-5">
-            <button
-              disabled={isSaving}
-              onClick={saveBotConfig}
-              className={`hover:border-green-500 copy-button w-20 border rounded-md p-1 ${
-                isSaved && "bg-green-500 text-white"
-              }`}
-            >
-              {isSaving ? "Saving..." : isSaved ? "Saved!" : "Save"}
-            </button>
-            <button
-              onClick={copyEmbedCode}
-              className={`hover:border-green-500 copy-button w-48 ml-2 border rounded-md p-1 ${
-                embedCodeCopied && "bg-green-500 text-white"
-              }`}
-            >
-              {embedCodeCopied ? "Copied embed code!" : "Copy embed code"}
-            </button>
+              <button
+                onClick={() => {
+                  setCurrentUser(null);
+                  setChatbotConfig(defaultConfig);
+                }}
+              >
+                <MdOutlinePower size={24} color="red" />
+              </button>
+            </div>
           </div>
+
+          {/* start UI start*/}
+
+          {!chatbotId && (
+            <Fragment>
+              <div className="p-5 flex flex-col gap-5">
+                {Object.values(chatbots).map((chatbot: any) => {
+                  return (
+                    <div key={chatbot.bot_id} className="flex border items-center justify-between text-sm">
+                      <button
+                        className="flex w-full  p-3 items-center gap-5 border-r hover:bg-green-500 hover:text-white  "
+                        onClick={() => {
+                          setChatbotId(chatbot.bot_id);
+                          setChatbotConfig((prev: any) => {
+                            return {
+                              ...prev,
+                              ...chatbot,
+                            };
+                          });
+                        }}
+                      >
+                        {" "}
+                        <BsRobot size={20} />
+                        {chatbot.configurations?.title}
+                      </button>
+
+                      <button
+                        disabled={isDeleting}
+                        onClick={() => deleteBot(chatbot.bot_id)}
+                        className={`hover:bg-red-500  hover:text-white h-full flex justify-center items-center w-14 py-3 ${
+                          deletingBotId === chatbot.bot_id && "bg-red-500 text-white"
+                        }`}
+                      >
+                        {isDeleting ? (
+                          "..."
+                        ) : deletingBotId === chatbot.bot_id ? (
+                          <AiOutlineCheck size={20} />
+                        ) : (
+                          <AiOutlineDelete size={20} />
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+
+                <button
+                  disabled={Object.keys(chatbots).length >= 3 && !isPremium}
+                  className={`disabled:bg-gray-500 flex items-center  w-56 justify-center gap-2 px-3 py-2 mt-2 bg-green-500 text-sm text-white`}
+                  onClick={createBrandNewBot}
+                >
+                  <AiOutlinePlus size={18} />
+                  <p>Create new bot</p>
+                </button>
+
+                {Object.keys(chatbots).length >= 3 && !isPremium && (
+                  <p className="flex items-start gap-2 text-xs text-red-500">
+                    <MdInfo size={30} />
+                    <span>
+                      You have exceeded your limit of 3 chatbots. You can either delete any of your chatbot and create a
+                      new one or update existing one or upgrade to premium account.
+                    </span>
+                  </p>
+                )}
+              </div>
+            </Fragment>
+          )}
+          {/* start UI end*/}
+
+          {/* configuration UI start*/}
+          {chatbotId && (
+            <Fragment>
+              <p className="px-5 pt-2 text-lg font-bold">Customize your chatbot</p>
+
+              <p className="text-xs px-5 my-5">
+                Selected Chatbot :{" "}
+                <select
+                  value={chatbotId}
+                  className="bg-inherit outline-none border p-1"
+                  onChange={(e) => {
+                    setChatbotId(e.target.value);
+                    setChatbotConfig((prev: any) => {
+                      return {
+                        ...prev,
+                        //@ts-ignore
+                        ...chatbots[e.target.value],
+                      };
+                    });
+                  }}
+                >
+                  {Object.values(chatbots).map((chatbot: any) => {
+                    return (
+                      <option value={chatbot.bot_id} key={chatbot.bot_id}>
+                        {chatbot.configurations?.title}
+                      </option>
+                    );
+                  })}
+                </select>
+              </p>
+              <p className="text-xs px-5 mb-3">ChatbotID: {chatbotId}</p>
+
+              <TitlebarStyling />
+              <MessageBoxStyling />
+              <MessageManager />
+
+              <section className="flex items-center px-5 gap-2 mt-5">
+                <input
+                  onChange={() =>
+                    setChatbotConfig((prev: any) => {
+                      return {
+                        ...prev,
+                        configurations: {
+                          ...prev.configurations,
+                          isActive: !prev.configurations.isActive,
+                        },
+                      };
+                    })
+                  }
+                  checked={chatbotConfig.configurations?.isActive}
+                  type="checkbox"
+                />
+                Active
+              </section>
+
+              <div className="flex ml-5 text-sm mt-5">
+                <button
+                  disabled={isSaving}
+                  onClick={saveBotConfig}
+                  className={`hover:border-green-500 copy-button w-32 border px-3 py-2 ${
+                    isSaved && "bg-green-500 text-white"
+                  }`}
+                >
+                  {isSaving ? "Saving..." : isSaved ? "Saved!" : "Save"}
+                </button>
+                <button
+                  onClick={copyEmbedCode}
+                  className={`hover:border-green-500 copy-button w-48 ml-2 border px-3 py-2 ${
+                    embedCodeCopied && "bg-green-500 text-white"
+                  }`}
+                >
+                  {embedCodeCopied ? "Copied embed code!" : "Copy embed code"}
+                </button>
+              </div>
+            </Fragment>
+          )}
+          {/* configuration UI end*/}
         </div>
       </div>
 
-      <div className="w-full pl-5 w-full max-w-[350px]">
-        <Chatbox chatbotConfig={chatbotConfig} />
-      </div>
+      <div className="w-full pl-5 w-full max-w-[350px]">{chatbotId && <Chatbox chatbotConfig={chatbotConfig} />}</div>
     </div>
   );
 }

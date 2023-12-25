@@ -25,7 +25,7 @@ export default function Login() {
     <div className="h-screen w-full flex flex-col items-center justify-center">
       <button
         onClick={onLogin}
-        className="flex items-center gap-2 border px-5 py-3 rounded-md hover:bg-green-500 hover:text-white"
+        className="flex items-center gap-2 border px-5 py-3 hover:bg-green-500 hover:text-white"
       >
         <FaGoogle size={20} />
         <span>Login with google</span>
