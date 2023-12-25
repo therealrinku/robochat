@@ -59,7 +59,7 @@ export default function Login() {
           <div className="grid grid-cols-1 gap-y-4 lg:items-center lg:grid-cols-2 xl:grid-cols-2">
             <div className="text-center xl:col-span-1 lg:text-left md:px-16 lg:px-0 xl:pr-20">
               <h1 className="text-4xl font-bold leading-tight text-gray-900 sm:text-5xl sm:leading-tight lg:text-6xl lg:leading-tight font-pj">
-                Create chabot on the fly
+                Create chatbot on the fly
               </h1>
               <p className="mt-2 text-lg text-gray-600 sm:mt-6 font-inter">
                 Customer support matters and we are here to help, customize chatbot that fits your needs instantly and
