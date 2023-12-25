@@ -19,7 +19,8 @@ export default function MessageBoxStyling() {
 
       {isExpanded && (
         <div className="pb-5 px-5 flex flex-col gap-5 mt-2">
-          <section className="flex gap-2 items-center">
+          
+          <section className="flex flex-col gap-2">
             <label htmlFor="botMessageBgColor">Bot Message Bg Color</label>
             <input
               value={chatbotConfig.configurations?.botMessageBgColor}
@@ -30,12 +31,12 @@ export default function MessageBoxStyling() {
                 })
               }
               name="botMessageBgColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="botMessageTextColor">Bot Message Text Color</label>
             <input
               value={chatbotConfig.configurations?.botMessageTextColor}
@@ -46,12 +47,12 @@ export default function MessageBoxStyling() {
                 })
               }
               name="botMessageTextColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="userMessageBgColor">User Message Bg Color</label>
             <input
               value={chatbotConfig.configurations?.userMessageBgColor}
@@ -62,12 +63,12 @@ export default function MessageBoxStyling() {
                 })
               }
               name="userMessageBgColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="userMesssageTextColor">User Message Text Color</label>
             <input
               value={chatbotConfig.configurations?.userMesssageTextColor}
@@ -78,12 +79,12 @@ export default function MessageBoxStyling() {
                 })
               }
               name="userMesssageTextColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="botMessageTextColor">Bot toggle Button Bg</label>
             <input
               value={chatbotConfig.configurations?.btnBgColor}
@@ -94,7 +95,7 @@ export default function MessageBoxStyling() {
                 })
               }
               name="botMessageTextColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>

@@ -36,7 +36,7 @@ export default function Login() {
             <div className="hidden md:flex">
               <button
                 onClick={onLogin}
-                className="inline-flex gap-3 items-center justify-center px-6 py-3 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+                className="flex items-center  justify-center gap-3 bg-green-500 p-3 text-white w-48 hover:bg-green-700"
               >
                 <FaGoogle />
                 Login with google
@@ -66,10 +66,7 @@ export default function Login() {
                 improve your customer support.
               </p>
 
-              <button
-                onClick={onLogin}
-                className="inline-flex items-center gap-3 px-8 py-4 mt-8 text-lg font-bold text-white transition-all duration-200 bg-gray-900 border border-transparent rounded sm:mt-10 font-pj hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-              >
+              <button onClick={onLogin} className="mt-5 bg-green-500 p-3 text-white w-48 hover:bg-green-700">
                 Get Started
               </button>
             </div>

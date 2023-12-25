@@ -19,7 +19,7 @@ export default function TitlebarStyling() {
 
       {isExpanded && (
         <div className="pb-5 px-5 flex flex-col gap-5 mt-2">
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="chatbotTitle">Title</label>
             <input
               value={chatbotConfig.configurations?.title}
@@ -30,12 +30,12 @@ export default function TitlebarStyling() {
                 })
               }
               name="chatbotTitle"
-              className="border outline-none pl-2 py-1"
+              className="border outline-none pl-2 py-1 w-full"
               type="text"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="chatbotTextColor">Icon Url</label>
             <input
               value={chatbotConfig.configurations?.icon}
@@ -49,12 +49,12 @@ export default function TitlebarStyling() {
                 })
               }
               name="chatbotTextColor"
-              className=" border outline-none p-1  bg-white"
+              className=" border outline-none p-1  bg-white w-full"
               type="text"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="chatbotBg">Background color</label>
             <input
               value={chatbotConfig.configurations?.titleBgColor}
@@ -65,12 +65,12 @@ export default function TitlebarStyling() {
                 })
               }
               name="chatbotBg"
-              className="border outline-none p-1  bg-white"
+              className="border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>
 
-          <section className="flex gap-2 items-center">
+          <section className="flex flex-col gap-2">
             <label htmlFor="chatbotTextColor">Text color</label>
             <input
               value={chatbotConfig.configurations?.titleTextColor}
@@ -81,7 +81,7 @@ export default function TitlebarStyling() {
                 })
               }
               name="chatbotTextColor"
-              className="border outline-none p-1  bg-white"
+              className="border outline-none p-1  bg-white w-full"
               type="color"
             />
           </section>

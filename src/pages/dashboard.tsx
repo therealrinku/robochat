@@ -224,7 +224,7 @@ export default function Dashboard() {
                   return (
                     <div key={chatbot.bot_id} className="flex border items-center justify-between text-sm">
                       <button
-                        className="flex w-full  p-3 items-center gap-5 border-r hover:bg-green-500 hover:text-white  "
+                        className="flex w-full  p-3 items-center gap-5 border-r hover:bg-green-500 hover:text-white"
                         onClick={() => {
                           setChatbotId(chatbot.bot_id);
                           setChatbotConfig((prev: any) => {
@@ -261,7 +261,7 @@ export default function Dashboard() {
 
                 <button
                   disabled={Object.keys(chatbots).length >= 3 && !isPremium}
-                  className={`disabled:bg-gray-500 flex items-center  w-56 justify-center gap-2 px-3 py-2 mt-2 bg-green-500 text-sm text-white`}
+                  className={`hover:bg-green-700 disabled:bg-gray-500 flex items-center  w-56 justify-center gap-2 px-3 py-2 mt-2 bg-green-500 text-sm text-white`}
                   onClick={createBrandNewBot}
                 >
                   <AiOutlinePlus size={18} />
@@ -291,7 +291,7 @@ export default function Dashboard() {
                 Selected Chatbot :{" "}
                 <select
                   value={chatbotId}
-                  className="bg-inherit outline-none border p-1"
+                  className="bg-inherit outline-none border p-1 w-48 truncate max-w-[200px] pr-5"
                   onChange={(e) => {
                     setChatbotId(e.target.value);
                     setChatbotConfig((prev: any) => {
@@ -342,7 +342,7 @@ export default function Dashboard() {
                   disabled={isSaving}
                   onClick={saveBotConfig}
                   className={`hover:border-green-500 copy-button w-32 border px-3 py-2 ${
-                    isSaved && "bg-green-500 text-white"
+                    !isSaved && "bg-green-500 text-white"
                   }`}
                 >
                   {isSaving ? "Saving..." : isSaved ? "Saved!" : "Save"}

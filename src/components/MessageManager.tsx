@@ -6,7 +6,6 @@ import {
   AiOutlineCaretUp,
   AiOutlineDelete,
   AiOutlinePlus,
-  AiOutlinePlusCircle,
 } from "react-icons/ai";
 import InputModal from "./InputModal";
 
@@ -44,8 +43,8 @@ export default function MessageManager() {
           {Object.values(chatbotConfig.messages).map((msg) => {
             return (
               <Fragment key={msg.id}>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => expandUnexpandMessage(msg.id)}>
+                <div onClick={() => expandUnexpandMessage(msg.id)} className="flex cursor-pointer items-center gap-2">
+                  <button>
                     {expandedMessages.includes(msg.id) ? (
                       <AiOutlineCaretDown size={18} />
                     ) : (
@@ -68,7 +67,7 @@ export default function MessageManager() {
 
                 {expandedMessages.includes(msg.id) && (
                   <div className="ml-7">
-                    {msg?.replyOptions?.map((ro: any, roIndex:number) => {
+                    {msg?.replyOptions?.map((ro: any, roIndex: number) => {
                       const replyOptionsArr = Object.values(chatbotConfig.messages);
                       return (
                         <div key={ro.id} className="flex border-b mb-2 pb-2 items-center gap-5">
@@ -120,7 +119,7 @@ export default function MessageManager() {
                 setMessage("");
               }}
             >
-              <AiOutlinePlusCircle size={18} />
+              <AiOutlinePlus size={18} />
             </button>
           </div>
         </div>
