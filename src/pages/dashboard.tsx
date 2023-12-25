@@ -81,6 +81,12 @@ export default function Dashboard() {
       configurations: chatbotConfig.configurations,
     });
 
+    //update name of the chatbot on the chatbots object
+    const updatedChatbots = { ...chatbots };
+    //@ts-ignore
+    updatedChatbots[chatbotId].configurations.title = chatbotConfig?.configurations?.title;
+    setChatbots(updatedChatbots);
+
     setIsSaving(false);
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2023);
