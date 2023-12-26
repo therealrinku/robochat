@@ -179,13 +179,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row justify-center mx-auto w-full max-w-[1000px] h-screen">
-      <div className="border-r border-l w-full md:w-[50%] overflow-y-auto pb-5">
+    <div className="flex flex-row md:justify-center mx-auto w-full max-w-[1000px] h-screen">
+      <div className="border-r md:border-l w-[75%] md:w-[50%] pb-5 overflow-y-hidden">
         <div className="text-sm flex flex-col">
-          <div className="px-5 py-2 flex items-center justify-between">
+          <div className="px-5 py-2 border-b flex items-center justify-between">
             {chatbotId ? (
               <button onClick={() => setChatbotId("")} className="text-sm flex items-center gap-1">
-                <BsArrowLeftShort size={20} />
+                <BsArrowLeftShort size={24} />
                 <p>Back</p>
               </button>
             ) : (
@@ -284,7 +284,7 @@ export default function Dashboard() {
 
           {/* configuration UI start*/}
           {chatbotId && (
-            <Fragment>
+            <div className="overflow-y-auto h-screen pb-20">
               <p className="px-5 pt-2 text-lg font-bold">Customize your chatbot</p>
 
               <p className="text-xs px-5 my-5">
@@ -356,13 +356,13 @@ export default function Dashboard() {
                   {embedCodeCopied ? "Copied embed code!" : "Copy embed code"}
                 </button>
               </div>
-            </Fragment>
+            </div>
           )}
           {/* configuration UI end*/}
         </div>
       </div>
 
-      <div className="w-full pl-5 w-full max-w-[350px]">{chatbotId && <Chatbox chatbotConfig={chatbotConfig} />}</div>
+      <div>{chatbotId && <Chatbox chatbotConfig={chatbotConfig} />}</div>
     </div>
   );
 }

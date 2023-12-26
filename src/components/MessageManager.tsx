@@ -78,7 +78,7 @@ export default function MessageManager() {
                               //@ts-ignore
                               value={chatbotConfig.messages[ro.nextMessageId].id}
                               onChange={(e) => updateNextMessage(msg.id, roIndex, e.target.value)}
-                              className="bg-inherit outline-none border px-2 py-1 max-w-[150px]"
+                              className="bg-inherit outline-none border px-2 py-1 max-w-[70%] pr-5 truncate"
                             >
                               {replyOptionsArr.map((omsg) => {
                                 return (
