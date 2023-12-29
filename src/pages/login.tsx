@@ -50,7 +50,7 @@ export default function Login() {
           </div>
         </div>
 
-        {bgImgUrl && <img className="w-full" src={bgImgUrl} />}
+        {bgImgUrl && <img className="w-full h-screen " src={bgImgUrl} />}
       </div>
     </div>
   );

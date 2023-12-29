@@ -43,15 +43,15 @@ export default function MessageManager() {
           {Object.values(chatbotConfig.messages).map((msg) => {
             return (
               <Fragment key={msg.id}>
-                <div onClick={() => expandUnexpandMessage(msg.id)} className="flex cursor-pointer items-center gap-2">
-                  <button>
+                <div className="flex cursor-pointer items-start gap-2">
+                  <button onClick={() => expandUnexpandMessage(msg.id)}>
                     {expandedMessages.includes(msg.id) ? (
                       <AiOutlineCaretDown size={18} />
                     ) : (
                       <AiOutlineCaretRight size={18} />
                     )}
                   </button>
-                  <p className="font-bold">{msg.message}</p>
+                  <p className="font-bold" onClick={() => expandUnexpandMessage(msg.id)}>{msg.message}</p>
                   <button
                     onClick={() => {
                       setSelectedMsgId(msg.id);
@@ -70,29 +70,36 @@ export default function MessageManager() {
                     {msg?.replyOptions?.map((ro: any, roIndex: number) => {
                       const replyOptionsArr = Object.values(chatbotConfig.messages);
                       return (
-                        <div key={ro.id} className="flex border-b mb-2 pb-2 items-center gap-5">
-                          <p>{ro.message}</p>
+                        <div key={ro.id} className="flex flex-col border-b mb-2 pb-2 gap-5">
+                          <p>
+                            {roIndex + 1}. {ro.message}
+                          </p>
 
-                          {replyOptionsArr.length > 0 && (
-                            <select
-                              //@ts-ignore
-                              value={chatbotConfig.messages[ro.nextMessageId].id}
-                              onChange={(e) => updateNextMessage(msg.id, roIndex, e.target.value)}
-                              className="bg-inherit outline-none border px-2 py-1 max-w-[70%] pr-5 truncate"
-                            >
-                              {replyOptionsArr.map((omsg) => {
-                                return (
-                                  <option key={omsg.id} value={omsg.id}>
-                                    {omsg.message}
-                                  </option>
-                                );
-                              })}
-                            </select>
-                          )}
+                          <div className="flex items-end justify-between gap-2">
+                            <div className="flex flex-col gap-2">
+                              <p className="text-sm text-green-500">Select Reply</p>
+                              {replyOptionsArr.length > 0 && (
+                                <select
+                                  //@ts-ignore
+                                  value={chatbotConfig.messages[ro.nextMessageId].id}
+                                  onChange={(e) => updateNextMessage(msg.id, roIndex, e.target.value)}
+                                  className="bg-inherit outline-none border px-2 py-1 max-w-[70%] pr-5 truncate"
+                                >
+                                  {replyOptionsArr.map((omsg) => {
+                                    return (
+                                      <option key={omsg.id} value={omsg.id}>
+                                        {omsg.message}
+                                      </option>
+                                    );
+                                  })}{" "}
+                                </select>
+                              )}
+                            </div>
 
-                          <button onClick={() => deleteResponse(msg.id, ro.id)}>
-                            <AiOutlineDelete color="red" size={18} />
-                          </button>
+                            <button onClick={() => deleteResponse(msg.id, ro.id)}>
+                              <AiOutlineDelete color="red" size={18} />
+                            </button>
+                          </div>
                         </div>
                       );
                     })}
