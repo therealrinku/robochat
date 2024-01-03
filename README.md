@@ -3,10 +3,10 @@
 Robochatbot is a web app for creating robust classic chatbots for your company which will help user to get quick answers to the common FAQ.
 
 
-![image](https://github.com/therealrinku/robochatbot/assets/76877078/a76ab53b-6bba-4141-9500-654ec70596d0)
+![image](https://github.com/therealrinku/robochatbot/assets/76877078/7da9b6e9-43ae-4109-a279-ee4a2a8568d6)
 
 
-![image](https://github.com/therealrinku/robochatbot/assets/76877078/92c7614c-1355-40b1-9cdd-51729ede3fce)
+![image](https://github.com/therealrinku/robochatbot/assets/76877078/6fd30f06-b1b3-4ddc-ab5b-949480b5eb59)
 
 ## Features
 
@@ -35,7 +35,7 @@ To run this project locally, follow these steps:
    ```bash
    git clone https://github.com/therealrinku/robochatbot.git
 
-2. Install the dependencies on both client and backend folders respectively.
+2. Install the dependencies
    ```bash
    yarn install
    
