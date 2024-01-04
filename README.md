@@ -40,6 +40,7 @@ To run this project locally, follow these steps:
    yarn install
    
 3. Get your firebase app config and add to firebase.js in the src/ folder or in .env file matching env variables name in firebase.js
+more info: https://firebase.google.com/docs/web/setup
 
 5. Run the web app.
    ```bash
