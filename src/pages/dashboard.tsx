@@ -31,7 +31,7 @@ export default function Dashboard() {
     title="Example Iframe"
     src=${window.location.origin}/bot/${chatbotId}
     frameBorder="0"
-    style="position: fixed; width: 400px; height: 100%; bottom: 0; right: 0; z-index: 111"
+    style="position: fixed; width: 400px; height: 550px; bottom: 0; right: 0; z-index: 111"
     ></iframe>
 `;
     window.navigator.clipboard.writeText(iframeUrl);
