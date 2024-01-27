@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import useAppContext from "../hooks/useAppContext";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiFillGoogleCircle, AiOutlineUser } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -43,9 +43,9 @@ export default function Login() {
           <p className="text-sm font-bold">Robochatbot</p>
 
           <div className="gap-3 flex items-center text-sm font-bold">
-            <button onClick={onLogin} className={`flex items-center gap-2 text-green-500`}>
-              <AiOutlineUser size={22} />
-              Login & create a new bot
+            <button onClick={onLogin} className={`flex items-center gap-2 text-red-500`}>
+              <AiFillGoogleCircle size={22} />
+              Login with Google
             </button>
           </div>
         </div>
