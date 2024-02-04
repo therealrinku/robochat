@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import useAppContext from "../hooks/useAppContext";
-import { AiFillGoogleCircle, AiOutlineUser } from "react-icons/ai";
+import { AiFillGoogleCircle } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -50,7 +50,7 @@ export default function Login() {
           </div>
         </div>
 
-        {bgImgUrl && <img className="w-full h-screen " src={bgImgUrl} />}
+        {bgImgUrl && <img data-testid="main-img" className="w-full h-screen " src={bgImgUrl} />}
       </div>
     </div>
   );
