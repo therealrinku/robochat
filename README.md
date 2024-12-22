@@ -1,35 +1,34 @@
-# Robochatbot
-
-Robochatbot is a web app for creating robust classic chatbots for your company which will help user to get quick answers to the common FAQ.
-
-
-![image](https://github.com/therealrinku/robochatbot/assets/76877078/7da9b6e9-43ae-4109-a279-ee4a2a8568d6)
-
-
-![image](https://github.com/therealrinku/robochatbot/assets/76877078/6fd30f06-b1b3-4ddc-ab5b-949480b5eb59)
+<div align="center">
+    <img src="https://cdn-icons-png.flaticon.com/128/10479/10479785.png" alt="Logo" width="80" height="80">
+    <h3>robochatbot</h3>
+    <p>minimalistic chatbot that you can embed to your website on single click</p>
+</div>
 
 ## Features
 
-- **Create your unique chatbot:** Create your chatbot that fits your needs.
-- **Customization:** Customize your chatbot to look and feel however you want.
-- **STAY TUNED FOR NEW FEATURES AND IMPROVEMENTS:** Robochatbot is reguarly improved and new features are added regularly. so stay tuned for that.
+✨ Create your chatbot that fits your needs
+
+
+✨ Customize your chatbot to look and feel however you want 
+
+
+✨ Minimalistic clutter free UI
+
+
+🔥 Support for other social media coming soon 
+
+
+🔥 Ability to create bulk posts(same post for multiple social media at once) coming soon
+
 
 ## Technologies Used
+<img src="https://img.shields.io/badge/react-000000?style=for-the-badge&logo=react&logoColor=white"/>
+<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=blue"/>
+<img src="https://img.shields.io/badge/tailwindcss-000000?style=for-the-badge&logo=tailwindcss&logoColor=blue"/>
 
-- **React.js:** Frontend development
-- **Firebase:** Utilized for database
-- **Vercel:** Web App Deployment
-
-## Getting Started
+## Development
 
 To run this project locally, follow these steps:
-
-### Prerequisites
-
-- Node.js installed
-- Firebase account for firestore database
-
-### Installation
 
 1. Clone the repository.
    ```bash
@@ -39,8 +38,7 @@ To run this project locally, follow these steps:
    ```bash
    yarn install
    
-3. Get your firebase app config and add to firebase.js in the src/ folder or in .env file matching env variables name in firebase.js
-more info: https://firebase.google.com/docs/web/setup
+3. Get your firebase app config with firestore configured and add to .env (see .env.example for variable names)
 
 5. Run the web app.
    ```bash
