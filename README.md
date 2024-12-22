@@ -14,12 +14,6 @@
 
 ✨ Minimalistic clutter free UI
 
-
-🔥 Support for other social media coming soon 
-
-
-🔥 Ability to create bulk posts(same post for multiple social media at once) coming soon
-
 ## Headshots
 
 <img width="1439" alt="Screenshot 2024-12-22 at 16 18 21" src="https://github.com/user-attachments/assets/ddd919a6-d10f-41fe-b13f-3fad9f68f0ea" />
