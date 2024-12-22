@@ -20,6 +20,11 @@
 
 🔥 Ability to create bulk posts(same post for multiple social media at once) coming soon
 
+## Headshots
+
+<img width="1439" alt="Screenshot 2024-12-22 at 16 18 21" src="https://github.com/user-attachments/assets/ddd919a6-d10f-41fe-b13f-3fad9f68f0ea" />
+<img width="1439" alt="Screenshot 2024-12-22 at 16 18 29" src="https://github.com/user-attachments/assets/5dd1c71e-5e30-4874-95a1-a4e5522e1dda" />
+
 
 ## Technologies Used
 <img src="https://img.shields.io/badge/react-000000?style=for-the-badge&logo=react&logoColor=white"/>
