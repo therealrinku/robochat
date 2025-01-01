@@ -22,6 +22,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
     messages: {
       1: {
         id: 1,
+        order: 1,
         message: "Hello beautiful person how can I help you today?",
         replyOptions: [
           {
@@ -53,6 +54,7 @@ export function AppContextProvider({ children }: PropsWithChildren) {
             id: newKey,
             message: message,
             replyOptions: [],
+            order: new Date().getTime(),
           },
         },
       };

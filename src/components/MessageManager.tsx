@@ -27,7 +27,7 @@ export default function MessageManager() {
       setExpandedMessages((prev) => [...prev, msgId]);
     }
   }
-
+  console.log(chatbotConfig.messages)
   return (
     <Fragment>
       <button
@@ -40,7 +40,7 @@ export default function MessageManager() {
 
       {isExpanded && (
         <div className="border-b  pb-5 px-5 flex flex-col gap-5 mt-3">
-          {Object.values(chatbotConfig.messages).map((msg) => {
+          {Object.values(chatbotConfig.messages).sort((msg1, msg2)=>msg1.order -  msg2.order).map((msg) => {
             return (
               <Fragment key={msg.id}>
                 <div className="flex cursor-pointer items-start gap-2">
