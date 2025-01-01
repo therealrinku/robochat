@@ -69,6 +69,8 @@ export default function MessageManager() {
                   <div className="ml-7">
                     {msg?.replyOptions?.map((ro: any, roIndex: number) => {
                       const replyOptionsArr = Object.values(chatbotConfig.messages);
+                      //@ts-ignore
+                      const selectedReply = chatbotConfig.messages[ro.nextMessageId]?.id || chatbotConfig.messages[0]?.id; 
                       return (
                         <div key={ro.id} className="flex flex-col border-b mb-2 pb-2 gap-5">
                           <p>
@@ -81,7 +83,7 @@ export default function MessageManager() {
                               {replyOptionsArr.length > 0 && (
                                 <select
                                   //@ts-ignore
-                                  value={chatbotConfig.messages[ro.nextMessageId].id}
+                                  value={selectedReply}
                                   onChange={(e) => updateNextMessage(msg.id, roIndex, e.target.value)}
                                   className="bg-inherit outline-none border px-2 py-1 max-w-[70%] pr-5 truncate"
                                 >

@@ -90,14 +90,14 @@ export default function Chatbox({ chatbotConfig }: any) {
                 );
               })}
 
-              <div className="w-[75%] float-right border rounded-t-md rounded-b-md mt-3">
+              <div className="w-[75%] float-right border r-t-md rounded-b-md mt-3">
                 {/*@ts-ignore */}
                 <p
                   style={{
                     backgroundColor: chatbotConfig.configurations?.botMessageBgColor,
                     color: chatbotConfig.configurations?.botMessageTextColor,
                   }}
-                  className="px-3 py-2 text-sm"
+                  className="px-3 py-2 text-sm font-medium"
                 >
                   {replyOptions?.message}
                 </p>
@@ -106,7 +106,7 @@ export default function Chatbox({ chatbotConfig }: any) {
                   return (
                     <button
                       onClick={(e) => nextMessage(e, message)}
-                      className={`hover:italic px-3 text-left w-full text-black  text-sm py-2 border-t-2`}
+                      className={`px-3 text-left w-full text-black  text-sm py-2 border-t-2`}
                       key={message.id}
                     >
                       {message.message}
